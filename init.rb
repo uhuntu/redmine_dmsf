@@ -31,6 +31,29 @@ Redmine::Plugin.register :redmine_dmsf do
   
   requires_redmine version_or_higher: '5.0.0'
 
+  menu :project_menu, :dmsf,
+       { controller: 'dmsf', action: 'show' },
+       caption: :menu_dmsf,
+       before: :documents,
+       param: :id,
+       html: { class: 'icon icon-dmsf' }
+
+  menu :project_menu, :dmsf_file,
+       { controller: 'dmsf_upload', action: 'multi_upload' },
+       caption: :label_dmsf_new_top_level_document,
+       parent: :new_object
+
+  menu :project_menu, :dmsf_folder,
+       { controller: 'dmsf', action: 'new' },
+       caption: :label_dmsf_new_top_level_folder,
+       parent: :new_object
+
+  menu :top_menu, :dmsf,
+       { controller: 'dmsf', action: 'index' },
+       caption: :menu_dmsf,
+       html: { class: 'icon-dmsf' },
+       if: Proc.new { User.current.allowed_to?(:view_dmsf_folders, nil, global: true) }
+
   settings partial: 'settings/dmsf_settings',
             default: {
               'dmsf_max_file_download' => 0,

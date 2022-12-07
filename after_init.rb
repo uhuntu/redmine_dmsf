@@ -31,24 +31,27 @@ def dmsf_init
     menu.push :dmsf_approvalworkflows, :dmsf_workflows_path, caption: :label_dmsf_workflow_plural,
               html: { class: 'icon icon-workflows' }, if: Proc.new { |_| User.current.admin? }
   end
-  # Project menu extension
-  Redmine::MenuManager.map :project_menu do |menu|
-    menu.push :dmsf, { controller: 'dmsf', action: 'show' }, caption: :menu_dmsf, before: :documents,
-              param: :id, html: { class: 'icon icon-dmsf' }
-    # New menu extension
-    menu.push :dmsf_file, { controller: 'dmsf_upload', action: 'multi_upload'},
-              caption: :label_dmsf_new_top_level_document, parent: :new_object
-    menu.push :dmsf_folder, { controller: 'dmsf', action: 'new'}, caption: :label_dmsf_new_top_level_folder,
-              parent: :new_object
-  end
-  # Main menu extension
-  unless(ActiveRecord::Base.connection.data_source_exists?('settings') &&
-    Setting.plugin_redmine_dmsf['dmsf_global_menu_disabled'])
-    Redmine::MenuManager.map :top_menu do |menu|
-      menu.push :dmsf, { controller: 'dmsf', action: 'index' }, caption: :menu_dmsf, html: { class: 'icon-dmsf' },
-              if: Proc.new { User.current.allowed_to?(:view_dmsf_folders, nil, global: true) }
-    end
-  end
+  # # Project menu extension
+  # Redmine::MenuManager.map :project_menu do |menu|
+  #   menu.push :dmsf, { controller: 'dmsf', action: 'show' }, caption: :menu_dmsf, before: :documents,
+  #             param: :id, html: { class: 'icon icon-dmsf' }
+  #   New menu extension
+  #   menu.push :dmsf_file, { controller: 'dmsf_upload', action: 'multi_upload'},
+  #             caption: :label_dmsf_new_top_level_document, parent: :new_object
+  #   menu.push :dmsf_folder, { controller: 'dmsf', action: 'new'}, caption: :label_dmsf_new_top_level_folder,
+  #             parent: :new_object
+  # end
+  # # Main menu extension
+  # unless(ActiveRecord::Base.connection.data_source_exists?('settings') &&
+  #   Setting.plugin_redmine_dmsf['dmsf_global_menu_disabled'])
+  #   Redmine::MenuManager.map :top_menu do |menu|
+  #     menu.push :dmsf,
+  #               { controller: 'dmsf', action: 'index' },
+  #               caption: :menu_dmsf,
+  #               html: { class: 'icon-dmsf' },
+  #               if: Proc.new { User.current.allowed_to?(:view_dmsf_folders, nil, global: true) }
+  #   end
+  # end
 
   Redmine::AccessControl.map do |map|
     map.project_module :dmsf do |pmap|
