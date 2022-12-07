@@ -36,14 +36,14 @@ $redmine_root = File.expand_path('../../../../', __FILE__)
 $files = 'dmsf'
 
 # scriptindex binary path 
-$scriptindex = '/usr/bin/scriptindex'
+$scriptindex = '/usr/local/bin/scriptindex'
 
 # omindex binary path
 # To index "non-text" files, use omindex filters
 # e.g.: tesseract OCR engine as a filter for PNG files
-$omindex = '/usr/bin/omindex'
-# $omindex += " --filter=image/png:'tesseract -l chi_sim+chi_tra %f -'"
-# $omindex += " --filter=image/jpeg:'tesseract -l chi_sim+chi_tra %f -'"
+$omindex = '/usr/local/bin/omindex'
+$omindex += " --filter=image/png:'tesseract -l chi_sim+chi_tra %f -'"
+$omindex += " --filter=image/jpeg:'tesseract -l chi_sim+chi_tra %f -'"
 
 # Directory containing Xapian databases for omindex (Attachments indexing)
 $dbrootpath = File.expand_path('dmsf_index', $redmine_root)
