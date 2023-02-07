@@ -41,6 +41,7 @@ def dmsf_init
   #   menu.push :dmsf_folder, { controller: 'dmsf', action: 'new'}, caption: :label_dmsf_new_top_level_folder,
   #             parent: :new_object
   # end
+  
   # # Main menu extension
   # unless(ActiveRecord::Base.connection.data_source_exists?('settings') &&
   #   Setting.plugin_redmine_dmsf['dmsf_global_menu_disabled'])
