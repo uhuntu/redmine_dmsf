@@ -382,7 +382,7 @@ class DmsfFile < ActiveRecord::Base
           Setting.plugin_redmine_dmsf['dmsf_index_database'].strip, lang)
         database = Xapian::Database.new(databasepath)
       rescue => e
-        Rails.logger.error "REDMINE_XAPIAN ERROR: Xapian database is not properly set, initiated or it's corrupted."
+        Rails.logger.error "DMSF REDMINE_XAPIAN ERROR: Xapian database is not properly set, initiated or it's corrupted."
         Rails.logger.error e.message
       end
 
