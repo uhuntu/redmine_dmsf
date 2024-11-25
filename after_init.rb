@@ -30,33 +30,6 @@ def dmsf_init
               html: { class: 'icon icon-workflows' },
               if: proc { |_| User.current.admin? }
   end
-  # Project menu extension
-  Redmine::MenuManager.map :project_menu do |menu|
-    menu.push :dmsf, { controller: 'dmsf', action: 'show' },
-              caption: :menu_dmsf,
-              before: :documents,
-              param: :id,
-              html: { class: 'icon icon-dmsf' }
-    # New menu extension
-    next if Redmine::Plugin.installed?('easy_extensions')
-
-    menu.push :dmsf_file, { controller: 'dmsf_upload', action: 'multi_upload' },
-              caption: :label_dmsf_new_top_level_document, parent: :new_object
-    menu.push :dmsf_folder, { controller: 'dmsf', action: 'new' },
-              caption: :label_dmsf_new_top_level_folder,
-              parent: :new_object
-  end
-  # Main menu extension
-  Redmine::MenuManager.map :top_menu do |menu|
-    menu.push :dmsf, { controller: 'dmsf', action: 'index' },
-              caption: :menu_dmsf,
-              html: { class: 'icon-dmsf', category: :rest_extension_modules },
-              if: proc {
-                User.current.allowed_to?(:view_dmsf_folders, nil, global: true) &&
-                  ActiveRecord::Base.connection.data_source_exists?('settings') &&
-                  Setting.plugin_redmine_dmsf['dmsf_global_menu_disabled'].blank?
-              }
-  end
 
   Redmine::AccessControl.map do |map|
     map.project_module :dmsf do |pmap|
