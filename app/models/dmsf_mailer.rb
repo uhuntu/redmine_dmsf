@@ -161,8 +161,20 @@ class DmsfMailer < Mailer
       @notice = notice
       @author = revision.dmsf_workflow_assigned_by_user
       @author ||= User.anonymous
-      mail to: user,
-           subject: "[#{@project.name} - #{l(:field_label_dmsf_workflow)}] #{@workflow.name} #{l(subject_id)} #{step_name}"
+      skip_no_self_notified = false
+      begin
+        # We need to switch off no_self_notified temporarily otherwise the email won't be sent
+        if (@author == user) && @author.pref.no_self_notified
+          @author.pref.no_self_notified = false
+          skip_no_self_notified = true
+        end
+        mail to: user,
+            subject: "[#{@project.name} - #{l(:field_label_dmsf_workflow)}] #{@workflow.name} #{l(subject_id)} #{step_name}"
+      ensure
+        if skip_no_self_notified
+          @author.pref.no_self_notified = true
+        end
+      end
     end
   end
 
