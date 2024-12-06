@@ -182,7 +182,7 @@ class DmsfFilesController < ApplicationController
             call_hook :dmsf_helper_upload_after_commit, { file: @file }
             begin
               recipients = DmsfMailer.deliver_files_updated(@project, [@file])
-              if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients']
+              if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients'] == '1'
                 if recipients.any?
                   to = recipients.collect{ |user, _| user.name }.first(
                     Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i).join(', ')
@@ -228,7 +228,7 @@ class DmsfFilesController < ApplicationController
         else
           begin
             recipients = DmsfMailer.deliver_files_deleted(@project, [@file])
-            if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients']
+            if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients'] == '1'
               if recipients.any?
                 to = recipients.collect{ |user, _| user.name }.first(
                   Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i).join(', ')

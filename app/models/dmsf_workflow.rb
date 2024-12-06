@@ -242,7 +242,7 @@ class DmsfWorkflow < ActiveRecord::Base
         :text_email_to_proceed,
         nil,
         assignments.first&.dmsf_workflow_step)
-    if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients'] && controller
+    if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients'] == '1' && controller
       unless recipients.blank?
         to = recipients.collect{ |r| r.name }.first(Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i).join(', ')
         to << ((recipients.count > Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i) ? ',...' : '.')
@@ -250,5 +250,5 @@ class DmsfWorkflow < ActiveRecord::Base
       end
     end
   end
-  
+
 end

@@ -661,7 +661,7 @@ class DmsfController < ApplicationController
     unless deleted_files.empty?
       begin
         recipients = DmsfMailer.deliver_files_deleted(@project, deleted_files)
-        if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients']
+        if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients'] == '1'
           if recipients.any?
             to = recipients.collect{ |user, _| user.name }.first(Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i).join(', ')
             to << ((recipients.count > Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i) ? ',...' : '.')

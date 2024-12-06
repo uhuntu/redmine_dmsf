@@ -1,6 +1,6 @@
 # encoding: utf-8
 # frozen_string_literal: true
-# 
+#
 # Redmine plugin for Document Management System "Features"
 #
 # Copyright © 2011-23 Karel Pičman <karel.picman@kontron.com>
@@ -131,7 +131,7 @@ module DmsfUploadHelper
       # Notifications
       begin
         recipients = DmsfMailer.deliver_files_updated(project, files)
-        if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients']
+        if Setting.plugin_redmine_dmsf['dmsf_display_notified_recipients'] == '1'
           unless recipients.empty?
             to = recipients.collect{ |user, _| user.name }.first(
               Setting.plugin_redmine_dmsf['dmsf_max_notification_receivers_info'].to_i).join(', ')
